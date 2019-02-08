@@ -2,16 +2,11 @@ import UIKit
 
 class ViewController: UITableViewController {
 
-    fileprivate var articles = [MainCategory]()
+    fileprivate var articles = [Category]()
     fileprivate var countOfItems: Int = 0
     
-    struct MainCategory: Decodable{
-        let title: String
-        let subs: [Category]
-    }
-    
     struct Category: Decodable {
-        let id: Int
+        let id: Int?
         let title: String
         let subs: [Category]?
     }
@@ -26,12 +21,13 @@ class ViewController: UITableViewController {
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             guard let data = data else {return}
             do{
-                let categories = try JSONDecoder().decode([MainCategory].self, from: data)
+                let categories = try JSONDecoder().decode([Category].self, from: data)
                 for item in categories{
                     self.countOfItems += 1
-                    let category = MainCategory(title: item.title, subs: item.subs)
+                    let category = Category(id: item.id, title: item.title, subs: item.subs)
                     self.articles.append(category)
-                    printCategoryFromMain(item: item)
+                    print(item.title)
+                    printCategory(item: item)
                     print(self.countOfItems)
                 }
             }
@@ -40,23 +36,17 @@ class ViewController: UITableViewController {
             }
         }.resume()
         
-        func printCategoryFromMain(item: JSONTest.ViewController.MainCategory) {
-            for item in item.subs{
+        func printCategory(item: JSONTest.ViewController.Category) {
+            for item in item.subs ?? []{
                 self.countOfItems += 1
+                print(item.title)
                 if (item.subs != nil){
-                    printPodcategoryFromPodcategory(item: item)
+                    printCategory(item: item)
                 }
             }
         }
         
-        func printPodcategoryFromPodcategory(item: JSONTest.ViewController.Category){
-            for item in item.subs!{
-                self.countOfItems += 1
-                if (item.subs != nil){
-                    printPodcategoryFromPodcategory(item: item)
-                }
-            }
-        }
+
     }
     
     
