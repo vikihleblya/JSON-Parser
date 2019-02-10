@@ -5,6 +5,7 @@ class ViewController: UITableViewController {
     fileprivate var articles = [Category]()
     fileprivate var categories = [String]()
     fileprivate var countOfItems: Int = 0
+    let db = Database()
     let cellId = "cellId"
     
     struct Category: Decodable {
@@ -17,7 +18,10 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         articles.removeAll()
         getDataFromJson()
-       
+        db.createTable()
+        db.deleteAllRows()
+        db.insert(id: 43, title: "Team")
+        db.query()
     
     }
     
