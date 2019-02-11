@@ -9,25 +9,27 @@
 /* Begin PBXBuildFile section */
 		01AF28F33963BC1C3129366B /* Pods_JSONTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DBEEA8F5D35B90B82EFD44 /* Pods_JSONTest.framework */; };
 		703AB251220C45DD008FCCE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703AB250220C45DD008FCCE4 /* AppDelegate.swift */; };
-		703AB253220C45DD008FCCE4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703AB252220C45DD008FCCE4 /* ViewController.swift */; };
+		703AB253220C45DD008FCCE4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703AB252220C45DD008FCCE4 /* MainViewController.swift */; };
 		703AB256220C45DD008FCCE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 703AB254220C45DD008FCCE4 /* Main.storyboard */; };
 		703AB259220C45DD008FCCE4 /* JSONTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 703AB257220C45DD008FCCE4 /* JSONTest.xcdatamodeld */; };
 		703AB25B220C45E8008FCCE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 703AB25A220C45E8008FCCE4 /* Assets.xcassets */; };
 		703AB25E220C45E8008FCCE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 703AB25C220C45E8008FCCE4 /* LaunchScreen.storyboard */; };
 		70F6C459220E548B002C6BE0 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F6C458220E548B002C6BE0 /* Database.swift */; };
+		70F6C45E2211C178002C6BE0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F6C45D2211C178002C6BE0 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0E9BF2DF05F01C88A783DA66 /* Pods-JSONTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSONTest.release.xcconfig"; path = "Target Support Files/Pods-JSONTest/Pods-JSONTest.release.xcconfig"; sourceTree = "<group>"; };
 		703AB24D220C45DD008FCCE4 /* JSONTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		703AB250220C45DD008FCCE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		703AB252220C45DD008FCCE4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		703AB252220C45DD008FCCE4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		703AB255220C45DD008FCCE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		703AB258220C45DD008FCCE4 /* JSONTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JSONTest.xcdatamodel; sourceTree = "<group>"; };
 		703AB25A220C45E8008FCCE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		703AB25D220C45E8008FCCE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		703AB25F220C45E8008FCCE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70F6C458220E548B002C6BE0 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		70F6C45D2211C178002C6BE0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		E3DBEEA8F5D35B90B82EFD44 /* Pods_JSONTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSONTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2B1A5DBB768323E43D7C10 /* Pods-JSONTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSONTest.debug.xcconfig"; path = "Target Support Files/Pods-JSONTest/Pods-JSONTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,7 +86,8 @@
 			children = (
 				70F6C457220E53EF002C6BE0 /* Database */,
 				703AB250220C45DD008FCCE4 /* AppDelegate.swift */,
-				703AB252220C45DD008FCCE4 /* ViewController.swift */,
+				703AB252220C45DD008FCCE4 /* MainViewController.swift */,
+				70F6C45D2211C178002C6BE0 /* Model.swift */,
 				703AB254220C45DD008FCCE4 /* Main.storyboard */,
 				703AB25A220C45E8008FCCE4 /* Assets.xcassets */,
 				703AB25C220C45E8008FCCE4 /* LaunchScreen.storyboard */,
@@ -223,7 +226,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				703AB253220C45DD008FCCE4 /* ViewController.swift in Sources */,
+				70F6C45E2211C178002C6BE0 /* Model.swift in Sources */,
+				703AB253220C45DD008FCCE4 /* MainViewController.swift in Sources */,
 				703AB259220C45DD008FCCE4 /* JSONTest.xcdatamodeld in Sources */,
 				70F6C459220E548B002C6BE0 /* Database.swift in Sources */,
 				703AB251220C45DD008FCCE4 /* AppDelegate.swift in Sources */,

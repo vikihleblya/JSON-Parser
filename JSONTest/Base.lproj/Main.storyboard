@@ -12,7 +12,7 @@
         <!--JSON Test-->
         <scene sceneID="ml5-2a-lAF">
             <objects>
-                <tableViewController id="eae-vw-qWr" customClass="ViewController" customModule="JSONTest" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="eae-vw-qWr" customClass="MainViewController" customModule="JSONTest" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="W1i-Sv-DXP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,7 +32,13 @@
                             <outlet property="delegate" destination="eae-vw-qWr" id="YCn-7V-18d"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="JSON Test" id="SQ5-4t-nYk"/>
+                    <navigationItem key="navigationItem" title="JSON Test" id="SQ5-4t-nYk">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="lny-aa-x9u">
+                            <connections>
+                                <action selector="refreshData:" destination="eae-vw-qWr" id="0Dd-sv-SG8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GwW-S2-ZJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

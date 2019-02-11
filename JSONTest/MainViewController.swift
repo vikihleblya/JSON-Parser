@@ -1,27 +1,39 @@
 import UIKit
 
-class ViewController: UITableViewController {
+class MainViewController: UITableViewController {
 
-    fileprivate var articles = [Category]()
-    fileprivate var categories = [String]()
     fileprivate var countOfItems: Int = 0
+    fileprivate var categories = [Category]()
     let db = Database()
     let cellId = "cellId"
     
-    struct Category: Decodable {
-        let id: Int?
-        let title: String
-        let subs: [Category]?
+    @IBAction func refreshData(_ sender: UIBarButtonItem) {
+        refreshData()
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        articles.removeAll()
-        //getDataFromJson()
         db.createTable()
         db.deleteAllRows()
-        db.checkTableIsEmpty()
-//        db.queryAllRows()
+        if(db.checkTableIsEmpty() == false){
+            let queue = DispatchQueue.global(qos: .utility)
+            queue.async {
+                self.getDataFromJson()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        else{
+            self.categories = db.queryAllRows()
+            print(categories)
+        }
+        
+    }
+    
+    func refreshData(){
+        
     }
     
     func getDataFromJson(){
@@ -33,10 +45,8 @@ class ViewController: UITableViewController {
             do{
                 let categories = try JSONDecoder().decode([Category].self, from: data)
                 for item in categories{
+                    self.categories.append(item)
                     self.db.insert(id: item.id ?? 0, title: item.title)
-                    let category = Category(id: item.id, title: item.title, subs: item.subs)
-                    self.articles.append(category)
-                    self.categories.append(item.title)
                     self.getCategory(item: item)
                 }
             }
@@ -45,30 +55,27 @@ class ViewController: UITableViewController {
             .resume()
     }
     
-    func getCategory(item: JSONTest.ViewController.Category) {
+    func getCategory(item: Category) {
         for item in item.subs ?? []{
-            self.categories.append(item.title)
+            self.categories.append(item)
             self.db.insert(id: item.id ?? 0, title: item.title)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
             if (item.subs != nil){
                 getCategory(item: item)
             }
         }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
-    
-
-    
 }
 
 
 //  MARK: Work with tableView
 
-extension ViewController {
+extension MainViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row]
+        cell.textLabel?.text = categories[indexPath.row].title
         return cell
     }
     

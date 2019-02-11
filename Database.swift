@@ -53,9 +53,10 @@ class Database {
         }
         sqlite3_finalize(insertStatement)
     }
-    
-    func queryAllRows() {
+
+    func queryAllRows() -> [Category] {
         let queryStatementString = "SELECT * FROM Category;"
+        var categories = [Category]()
         var queryStatement: OpaquePointer? = nil
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
             
@@ -63,13 +64,15 @@ class Database {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let queryResultCol1 = sqlite3_column_text(queryStatement, 1)
                 let title = String(cString: queryResultCol1!)
-                print("\(id) | \(title)")
+                let category = Category(id: Int(id), title: title)
+                categories.append(category)
             }
             
         } else {
             print("SELECT statement could not be prepared")
         }
         sqlite3_finalize(queryStatement)
+        return categories
     }
     
     func deleteAllRows() {
