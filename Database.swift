@@ -10,20 +10,20 @@ import SQLite
 
 class Database {
     let fileName = "db.sqlite"
-    var createTableString = String()
     var db: OpaquePointer?
-    var statement: OpaquePointer?
     var pointer: OpaquePointer?
     
     func createTable(){
+        var createTableStatement: OpaquePointer? = nil
+        
         let dbUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(self.fileName)
         
         sqlite3_open(dbUrl.path, &db)
         
-        createTableString = "CREATE TABLE IF NOT EXISTS Category(id INTEGER, title TEXT)"
+        let createTableStatementString = "CREATE TABLE IF NOT EXISTS Category(id INTEGER, title TEXT)"
         
-        if sqlite3_prepare_v2(db, createTableString, -1, &statement, nil) == SQLITE_OK {
-            if sqlite3_step(statement) == SQLITE_DONE {
+        if sqlite3_prepare_v2(db, createTableStatementString, -1, &createTableStatement, nil) == SQLITE_OK {
+            if sqlite3_step(createTableStatement) == SQLITE_DONE {
                 print("Category table created.")
             } else {
                 print("Category table could not be created.")
@@ -31,7 +31,7 @@ class Database {
         } else {
             print("CREATE TABLE statement could not be prepared.")
         }
-        sqlite3_finalize(statement)
+        sqlite3_finalize(createTableStatement)
         
     }
     
@@ -54,7 +54,7 @@ class Database {
         sqlite3_finalize(insertStatement)
     }
     
-    func query() {
+    func queryAllRows() {
         let queryStatementString = "SELECT * FROM Category;"
         var queryStatement: OpaquePointer? = nil
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
@@ -63,7 +63,6 @@ class Database {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let queryResultCol1 = sqlite3_column_text(queryStatement, 1)
                 let title = String(cString: queryResultCol1!)
-                print("Query Result:")
                 print("\(id) | \(title)")
             }
             
@@ -87,6 +86,19 @@ class Database {
         }
         
         sqlite3_finalize(deleteStatement)
+    }
+    
+    func checkTableIsEmpty() -> Bool{
+        let queryStatementString = "SELECT * FROM Category;"
+        var queryStatement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+            if(sqlite3_step(queryStatement) != SQLITE_ROW) {
+                sqlite3_finalize(queryStatement)
+                return false
+            }
+        }
+        sqlite3_finalize(queryStatement)
+        return true
     }
     
 }

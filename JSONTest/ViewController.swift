@@ -17,12 +17,11 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         articles.removeAll()
-        getDataFromJson()
+        //getDataFromJson()
         db.createTable()
         db.deleteAllRows()
-        db.insert(id: 43, title: "Team")
-        db.query()
-    
+        db.checkTableIsEmpty()
+//        db.queryAllRows()
     }
     
     func getDataFromJson(){
@@ -34,7 +33,7 @@ class ViewController: UITableViewController {
             do{
                 let categories = try JSONDecoder().decode([Category].self, from: data)
                 for item in categories{
-                    self.countOfItems += 1
+                    self.db.insert(id: item.id ?? 0, title: item.title)
                     let category = Category(id: item.id, title: item.title, subs: item.subs)
                     self.articles.append(category)
                     self.categories.append(item.title)
@@ -48,8 +47,8 @@ class ViewController: UITableViewController {
     
     func getCategory(item: JSONTest.ViewController.Category) {
         for item in item.subs ?? []{
-            self.countOfItems += 1
             self.categories.append(item.title)
+            self.db.insert(id: item.id ?? 0, title: item.title)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -58,6 +57,9 @@ class ViewController: UITableViewController {
             }
         }
     }
+    
+
+    
 }
 
 
