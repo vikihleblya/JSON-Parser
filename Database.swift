@@ -9,20 +9,19 @@
 import SQLite
 
 class Database {
-    let fileName = "db.sqlite"
-    var db: OpaquePointer?
-    var pointer: OpaquePointer?
+    let fileName = "database.sqlite"
+    var database: OpaquePointer?
     
     func createTable(){
         var createTableStatement: OpaquePointer? = nil
         
-        let dbUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(self.fileName)
+        let databaseUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(self.fileName)
         
-        sqlite3_open(dbUrl.path, &db)
+        sqlite3_open(databaseUrl.path, &database)
         
         let createTableStatementString = "CREATE TABLE IF NOT EXISTS Category(id INTEGER, title TEXT)"
         
-        if sqlite3_prepare_v2(db, createTableStatementString, -1, &createTableStatement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(database, createTableStatementString, -1, &createTableStatement, nil) == SQLITE_OK {
             if sqlite3_step(createTableStatement) == SQLITE_DONE {
                 print("Category table created.")
             } else {
@@ -38,7 +37,7 @@ class Database {
     func insert(id: Int, title: String) {
         var insertStatement: OpaquePointer? = nil
         let insertStatementString = "INSERT INTO Category (id, title) VALUES (?, ?);"
-        if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(database, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
             let id: Int32 = Int32(id)
             let title: NSString = title as NSString
             sqlite3_bind_int(insertStatement, 1, id)
@@ -58,7 +57,7 @@ class Database {
         let queryStatementString = "SELECT * FROM Category;"
         var categories = [Category]()
         var queryStatement: OpaquePointer? = nil
-        if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(database, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
             
             while (sqlite3_step(queryStatement) == SQLITE_ROW) {
                 let id = sqlite3_column_int(queryStatement, 0)
@@ -78,7 +77,7 @@ class Database {
     func deleteAllRows() {
         let deleteStatementStirng = "DELETE FROM Category"
         var deleteStatement: OpaquePointer? = nil
-        if sqlite3_prepare_v2(db, deleteStatementStirng, -1, &deleteStatement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(database, deleteStatementStirng, -1, &deleteStatement, nil) == SQLITE_OK {
             if sqlite3_step(deleteStatement) == SQLITE_DONE {
                 print("Successfully deleted row.")
             } else {
@@ -94,7 +93,7 @@ class Database {
     func checkTableIsEmpty() -> Bool{
         let queryStatementString = "SELECT * FROM Category;"
         var queryStatement: OpaquePointer? = nil
-        if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(database, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
             if(sqlite3_step(queryStatement) != SQLITE_ROW) {
                 sqlite3_finalize(queryStatement)
                 return false
